@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data App</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h2>Get any Weather Data from any Location Around the World!</h2>
+
+        <form id="myForm" method="post" action="/get-weather">
+            <label for="CityInput">City:</label>
+            <input type="text" id="CityInput" name="city" required>
+
+            <!-- Optional State Code for the US -->
+            <label for="StateInput">State Code (US only):</label>
+            <input type="text" id="StateInput" name="state">
+
+            <!-- Optional Country Code -->
+            <label for="CountryInput">Country Code:</label>
+            <input type="text" id="CountryInput" name="country">
+
+            <input type="submit" value="Get Weather Data">
+        </form>
+
+        <div class="weather-report">
+            <!-- has any properties at all, indicating it's not just an empty object -->
+            <% if (locals.weatherData && Object.keys(weatherData).length>0 && !weatherData.error) { %>
+                <h2>Weather Data</h2>
+                <ul>
+                    <li>Location: <%= weatherData.location %>
+                    </li>
+                    <li>Temperature: <%= weatherData.temperature %>
+                    </li>
+                    <li>Description: <%= weatherData.description %>
+                    </li>
+                    <li>Humidity: <%= weatherData.humidity %>
+                    </li>
+                    <li>Wind Speed: <%= weatherData.windSpeed %>
+                    </li>
+                    <li>Wind Gust: <%= weatherData.windGust %>
+                    </li>
+                    <li>Pressure: <%= weatherData.pressure %>
+                    </li>
+                    <li>Visibility: <%= weatherData.visibility %>
+                    </li>
+                    <li>Sunrise: <%= weatherData.sunrise %>
+                    </li>
+                    <li>Sunset: <%= weatherData.sunset %>
+                    </li>
+                    <li>Icon: <%= weatherData.icon %>
+                    </li>
+                </ul>
+
+                <!-- Add more data as needed -->
+                <% } else if (weatherData && weatherData.error) { %>
+                    <p>Error: <%= weatherData.error %>
+                    </p>
+                    <% } %>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
