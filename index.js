@@ -9,11 +9,15 @@ const port = 3000;
 const OneCallAPI_URL = "https://api.openweathermap.org/data/3.0/onecall";
 const DirectGeoCoding_URL = "https://api.openweathermap.org/geo/1.0/direct";
 
-const API_KEY = "f02aed8ad320b9569a869773e0700524";
+const apiKey = process.env.API_KEY;
+
+if (!apiKey) {
+    console.error("API key not found. Make sure to set the API_KEY environment variable.");
+    process.exit(1);
+}
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 // Render the index page with empty weather data
 app.get("/", (req, res) => {
@@ -44,7 +48,7 @@ app.post("/get-weather", async (req, res) => {
         const geoResponse = await axios.get(DirectGeoCoding_URL, {
             params: {
                 q: locationQuery,
-                appid: API_KEY,
+                appid: apiKey,
             },
         });
 
@@ -60,7 +64,7 @@ app.post("/get-weather", async (req, res) => {
                 params: {
                     lat: latitude,
                     lon: longitude,
-                    appid: API_KEY,
+                    appid: apiKey,
                     units: "metric",
                     exclude: "minutely,hourly,daily,alerts", // Exclude unnecessary data
                 },
