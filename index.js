@@ -66,12 +66,19 @@ app.post("/get-weather", async (req, res) => {
                     lon: longitude,
                     appid: apiKey,
                     units: "metric",
-                    exclude: "minutely,hourly,daily,alerts", // Exclude unnecessary data
+                    exclude: "minutely,hourly,alerts", // Exclude unnecessary data
                 },
             });
 
             // Extract current weather data 
             // const currentWeather = weatherResponse.data.current;
+
+            const tomorrowForecast = weatherResponse.data.daily[1];
+
+            // Check for rain, snow, or storm
+            const forecastConditions = tomorrowForecast.weather.map(condition => condition.main).join(", ");
+            const precipitation = tomorrowForecast.rain ? `Rain: ${tomorrowForecast.rain} mm` : (tomorrowForecast.snow ? `Snow: ${tomorrowForecast.snow} mm` : "No significant precipitation");
+
 
             // Extract sunrise time from the response
             const sunriseUnixTimestamp = weatherResponse.data.current.sunrise;
@@ -95,15 +102,24 @@ app.post("/get-weather", async (req, res) => {
             weatherData = {
                 location: geoResponse.data[0].name + ", " + geoResponse.data[0].state + ", " + geoResponse.data[0].country,
                 temperature: weatherResponse.data.current.temp + "°C",
-                description: weatherResponse.data.current.weather.description,
-                humidity: weatherResponse.data.current.humidity + "%",
-                windSpeed: weatherResponse.data.current.wind_speed + "m/s",
-                windGust: weatherResponse.data.current.wind_gust + "m/s",
-                pressure: weatherResponse.data.current.pressure + "hPa",
-                visibility: weatherResponse.data.current.visibility + "m",
-                sunrise: formattedSunriseTime,
-                sunset: formattedSunsetTime,
-                icon: weatherResponse.data.current.weather.icon,
+                // description: weatherResponse.data.current.weather.description,
+                // humidity: weatherResponse.data.current.humidity + "%",
+                // windSpeed: weatherResponse.data.current.wind_speed + "m/s",
+                // windGust: weatherResponse.data.current.wind_gust + "m/s",
+                // pressure: weatherResponse.data.current.pressure + "hPa",
+                // visibility: weatherResponse.data.current.visibility + "m",
+                // sunrise: formattedSunriseTime,
+                // sunset: formattedSunsetTime,
+                // icon: weatherResponse.data.current.weather.icon,
+                forecast: {
+                    date: new Date(tomorrowForecast.dt * 1000).toDateString(), // Date of forecast
+                    temperature: {
+                        min: tomorrowForecast.temp.min + "°C",
+                        max: tomorrowForecast.temp.max + "°C",
+                    },
+                    conditions: forecastConditions, // Rain, Snow, Clouds, etc.
+                    precipitation: precipitation,
+                }
             };
         } else {
             // If no geocoding data is found, populate weather data with an error message

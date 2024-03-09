@@ -35,26 +35,37 @@
                 <ul>
                     <li>Location: <%= weatherData.location %>
                     </li>
-                    <li>Temperature: <%= weatherData.temperature %>
+                    <li>Current Temperature: <%= weatherData.temperature %>
                     </li>
-                    <li>Description: <%= weatherData.description %>
+                    <!-- <li>Description: <%#= weatherData.description %>
                     </li>
-                    <li>Humidity: <%= weatherData.humidity %>
+                    <li>Humidity: <%#= weatherData.humidity %>
                     </li>
-                    <li>Wind Speed: <%= weatherData.windSpeed %>
+                    <li>Wind Speed: <%#= weatherData.windSpeed %>
                     </li>
-                    <li>Wind Gust: <%= weatherData.windGust %>
+                    <li>Wind Gust: <%#= weatherData.windGust %>
                     </li>
-                    <li>Pressure: <%= weatherData.pressure %>
+                    <li>Pressure: <%#= weatherData.pressure %>
                     </li>
-                    <li>Visibility: <%= weatherData.visibility %>
+                    <li>Visibility: <%#= weatherData.visibility %>
                     </li>
-                    <li>Sunrise: <%= weatherData.sunrise %>
+                    <li>Sunrise: <%#= weatherData.sunrise %>
                     </li>
-                    <li>Sunset: <%= weatherData.sunset %>
+                    <li>Sunset: <%#= weatherData.sunset %>
                     </li>
-                    <li>Icon: <%= weatherData.icon %>
+                    <li>Icon: <%#= weatherData.icon %> -->
                     </li>
+                    <li>Tomorrow's Forecast: <%= weatherData.forecast.date %>
+                    </li>
+                    <li>Min Temperature: <%= weatherData.forecast.temperature.min %>
+                    </li>
+                    <li>Max Temperature: <%= weatherData.forecast.temperature.max %>
+                    </li>
+                    <li>Conditions: <%= weatherData.forecast.conditions %>
+                    </li>
+                    <li>Precipitation: <%= weatherData.forecast.precipitation %>
+                    </li>
+
                 </ul>
 
                 <!-- Add more data as needed -->
