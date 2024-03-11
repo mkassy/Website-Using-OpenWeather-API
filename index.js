@@ -1,13 +1,17 @@
 import express from "express";
 import axios from "axios";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser"; 
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const port = 3000;
 
 // API URLs
-const OneCallAPI_URL = "https://api.openweathermap.org/data/3.0/onecall";
-const DirectGeoCoding_URL = "https://api.openweathermap.org/geo/1.0/direct";
+const OneCallAPI_URL = process.env.ONECALLAPI_URL;
+const DirectGeoCoding_URL = process.env.DIRECTGEOCODING_URL;
 
 const apiKey = process.env.API_KEY;
 
@@ -17,7 +21,8 @@ if (!apiKey) {
 }
 
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Render the index page with empty weather data
 app.get("/", (req, res) => {
